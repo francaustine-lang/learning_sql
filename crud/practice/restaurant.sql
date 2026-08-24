@@ -56,12 +56,12 @@ CREATE TABLE restaurants (
     describe TEXT,
     id BIGINIT PRIMARY KEY NOT NULL,
     office_address TEXT,
-    phone TEXT, // CORRECTION
-    e-mail VARCHAR(50), // CORRECTION
+    phone INT,
+    e-mail TEXT,
     created_at DATE,
-    created_by TEXT, // CORRECTION
+    created_by TEXT,
     updated_at DATE,
-    updated_by TEXT // CORRECTION
+    updated_by TEXT
 );	
 
 CREATE TABLE foods (
@@ -69,19 +69,19 @@ CREATE TABLE foods (
     style menu_style DEFAULT 'Boiled' NOT NULL, //(Fried, Roasted, Grilled, Smoked, Boiled)
     id BIGINT PRIMARY KEY NOT NULL,
     available available DEFAULT 'Yes' NOT NULL, //(Yes, No)
-    cost NUMERIC(9, 2), 
-    created_at TEXT, // CORRECTION
+    cost INT,
+    created_at TEXT,
     created_by TEXT,
     updated_at TEXT,
     updated_by TEXT
 );
 
 CREATE TABLE proteins (
-    protein protein DEFAULT 'Fish' NOT NULL, //(Fish, Chicken, Goat, Cow, Bush) // CORRECTION (CHANGE THE MAME TO BE protein_type)
+    protein protein DEFAULT 'Fish' NOT NULL, //(Fish, Chicken, Goat, Cow, Bush)
     id BIGINT PRIMARY KEY NOT NULL,
     style menu_style DEFAULT 'Roasted' NOT NULL, (Boiled, Fried, Roasted, Grilled)
     pepper level DEFAULT '0' NOT NULL, //(0 - 3)
-    texture texture DEFAULT 'Soft' NOT NULL, //(Soft, Hard)
+    texture texture DEFAULT 'SOFT' NOT NULL, //(Soft, Hard)
     status available DEFAULT 'Yes' NOT NULL,
     created_at DATE,
     created_by TEXT,
@@ -90,10 +90,10 @@ CREATE TABLE proteins (
 );
 
 CREATE TABLE drinks (
-    specie specie DEFAULT 'Soft' NOT NULL, //(Soft, Cream, Hard) // CORRECTION (CHANGE THE MAME TO BE protein_type)
-    title TEXT,
+    specie specie DEFAULT 'Soft' NOT NULL, //(Soft, Cream, Hard)
+    drink_name TEXT,
     id BIGINT PRIMARY KEY NOT NULL,
-    cost INT, // CORRECTION (CHANGE THE MAME TO BE protein_type)
+    cost INT,
     available available DEFAULT 'Yes' NOT NULL,
     created_at DATE,
     reated_by TEXT,
@@ -104,12 +104,12 @@ CREATE TABLE drinks (
 CREATE TABLE dispatcher (
     full_name TEXT,
     phone_number INT,
-    dispatcher_address TEXT,
+    _address TEXT,
     date_of_birth DATE,
     gender gender DEFAULT 'Male' NOT NULL,
     id: BIGINT PRIMARY KEY NOT NULL,
-    hashed_password TEXT,
-    dispatcher_qualification TEXT,
+    _password TEXT,
+    _qualification TEXT,
     grade grade DEFAULT 'A' NOT NULL, //(A, B, C)
     ride ride DEFAULT 'Bicycle' NOT NULL //(Motorbyke, Car, Bus, Lorry)
     created_at DATE,
@@ -169,7 +169,7 @@ CREATE TABLE order_tracking (
 
 CREATE TABLE payments (
     id BIGINT PRIMARY KEY NOT NULL,
-    order_id BIGINT REFERENCES orders(id) UNIQUE NOT NULL,
+    order_id BIGINT REFERENCES orders(id) NOT NULL,
     order_by TEXT REFERENCES customers('first_name', 'last_name'),
     order_type TEXT REFERENCES orders(what) NOT NULL,
     order_quantity INT REFERENCES order(quantity) NOT NULL,
@@ -188,7 +188,7 @@ Updated_by:
 
 CREATE TABLE invoice (
     id BIGINT PRIMARY KEY NOT NULL,
-    order_id BIGINT REFERENCES orders(id) UNIQUE NOT NULL,
+    order_id BIGINT REFERENCES orders(id) NOT NULL,
     order_name TEXT REFERENCES orders(what) NOT NULL,
     customer_name TEXT REFERENCES customers('first_name', 'last_name') NOT NULL,
     customer_address TEXT REFERENCES customers(full_address) NOT NULL,
