@@ -1,3 +1,11 @@
+CREATE FILE avail AS ENUM (
+    'Yes', 'No'
+);
+
+CREATE FILE sex AS ENUM (
+    'Male', 'Female'
+);
+
 CREATE TABLE office (
     name VARCHAR(50),
     id BIGINT PRIMARY KEY NOT NULL,
@@ -15,7 +23,7 @@ CREATE TABLE menu (
     id BIGINT PRIMARY KEY NOT NULL,
     name VARCHAR(50),
     description TEXT,
-    available: ENUM, ************
+    available avail DEFAULT 'Yes' NOT NULL,
     available_quantity/ration: INT,
     created_at DATE DEFAULT 'TODAY' NOT NULL,
     created_by VARCHAR REFERENCES personnel(official_name),
@@ -58,7 +66,7 @@ CREATE TABLE personnel (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     official_name VARCHAR(15),
-    gender ENUM, **********
+    gender sex DEFAULT 'Male' NOT NULL,
     phone INT,
     email TEXT,
     address TEXT,
@@ -86,15 +94,15 @@ CREATE TABLE rider (
 );	
 
 CREATE TABLE customer (
-    id BIGINT PRIMARY KEY NOT NULL,
+    id BIGINT PRIMARY KEY NOT NULL UNIQUE,
     fullname TEXT,
-    phone INT
+    phone INT,
     email TEXT,
     address TEXT,
     created_at DATE DEFAULT 'TODAY' NOT NULL,
-    created_by **********
+    created_by VARCHAR(50) DEFAULT 'Self',
     updated_at DATE DEFAULT 'TODAY' NOT NULL,
-    updated_by **********
+    updated_by VARCHAR(50) DEFAULT 'Self',
 );	
 
 CREATE TABLE campaign (
